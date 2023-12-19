@@ -1,0 +1,199 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".DetalhesEntrega">
+
+
+    <androidx.appcompat.widget.Toolbar
+        android:id="@+id/toolbar2"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="?attr/colorPrimary"
+        app:titleTextColor="@color/white"
+        app:title="Loca Da Entrega"
+        android:minHeight="?attr/actionBarSize"
+        android:theme="?attr/actionBarTheme"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintBottom_toTopOf="@+id/nomeLocal_origem"
+        app:layout_constraintStart_toStartOf="parent"
+
+        />
+
+    <TextView
+        android:id="@+id/nomeLocal_origem"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="35dp"
+        android:layout_marginTop="30dp"
+        android:text="Cliente:"
+        android:textSize="16sp"
+        android:textStyle="bold"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/toolbar2" />
+
+    <TextView
+        android:id="@+id/Local_Origem"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="35dp"
+        android:layout_marginTop="5dp"
+
+        android:text="Cliente:"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/nomeLocal_origem" />
+
+    <TextView
+        android:id="@+id/nomeLocal_destino"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="35dp"
+        android:layout_marginTop="20dp"
+        android:text="Cliente:"
+        android:textSize="16sp"
+        android:textStyle="bold"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/Local_Origem" />
+
+    <TextView
+        android:id="@+id/Local_destino"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="35dp"
+        android:layout_marginTop="5dp"
+
+        android:text="Cliente:"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/nomeLocal_destino" />
+
+    <View
+        android:id="@+id/linharRota"
+        android:layout_width="3dp"
+        android:layout_height="0dp"
+        android:layout_marginLeft="20dp"
+        android:background="#ff0000"
+        android:layout_marginTop="7dp"
+        android:layout_marginBottom="7dp"
+        app:layout_constraintBottom_toBottomOf="@+id/nomeLocal_destino"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/nomeLocal_origem" />
+    <View
+        android:id="@+id/quadrado"
+        android:layout_width="10dp"
+        android:layout_height="10dp"
+        android:layout_marginLeft="16dp"
+        android:background="#ff0000"
+        app:layout_constraintBottom_toBottomOf="@+id/nomeLocal_origem"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/nomeLocal_origem" />
+
+    <View
+        android:id="@+id/quadrado2"
+        android:layout_width="10dp"
+        android:layout_height="10dp"
+        android:layout_marginLeft="16dp"
+        android:background="#ff0000"
+        app:layout_constraintBottom_toBottomOf="@+id/nomeLocal_destino"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/nomeLocal_destino" />
+    <Button
+        android:id="@+id/rota"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="ver rota no mapa"
+        android:layout_marginTop="30dp"
+
+        android:layout_marginLeft="20dp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/Local_destino" />
+
+
+    <View
+        android:id="@+id/linha"
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:background="#80000000"
+        tools:layout_editor_absoluteX="13dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintBottom_toTopOf="@+id/observacao"
+        app:layout_constraintTop_toBottomOf="@+id/rota"
+        android:layout_marginTop="20dp"
+        android:layout_marginBottom="20dp"
+        />
+
+
+    <TextView
+        android:id="@+id/observacao"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="20dp"
+        android:layout_marginTop="20dp"
+        android:text="Observação:"
+        android:textSize="16sp"
+        android:textStyle="bold"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/linha" />
+
+    <TextView
+        android:id="@+id/observacaoText"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="20dp"
+        android:layout_marginTop="5dp"
+        android:text="Não ha observaçao no pedido"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/observacao"
+        android:layout_marginBottom="10dp"/>
+    <View
+        android:id="@+id/linha2"
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:background="#80000000"
+        tools:layout_editor_absoluteX="13dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintBottom_toTopOf="@+id/itensPedido"
+        app:layout_constraintTop_toBottomOf="@+id/observacaoText"
+        android:layout_marginTop="20dp"
+        android:layout_marginBottom="20dp"
+        />
+
+    <TextView
+        android:id="@+id/itensPedido"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="20dp"
+        android:layout_marginTop="20dp"
+        android:text="Itens do pedido"
+        android:textSize="16sp"
+        android:textStyle="bold"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/linha2" />
+
+    <TextView
+        android:id="@+id/itensPedidoText"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="20dp"
+        android:layout_marginTop="5dp"
+
+        android:text="maça \npizzat\ntes"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/itensPedido" />
+
+    <Button
+        android:id="@+id/entregue"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="ENTREGUE"
+        android:layout_marginBottom="30dp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent" />
+
+
+
+
+</androidx.constraintlayout.widget.ConstraintLayout>
