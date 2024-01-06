@@ -10,8 +10,8 @@
         android:id="@+id/toolbar"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="?attr/colorPrimary"
-        app:titleTextColor="@color/white"
+
+        app:titleTextColor="@color/black"
         android:minHeight="?attr/actionBarSize"
         android:theme="?attr/actionBarTheme"
         app:title="Historico"
@@ -27,35 +27,57 @@
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:layout_margin="1dp"
-        app:layout_constraintBottom_toTopOf="@+id/botaolistagem"
+        app:layout_constraintBottom_toTopOf="@+id/cardBotoesDohistorico"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/toolbar"
-        tools:listitem="@layout/historico_mes" />
+        tools:listitem="@layout/historico_ano" />
 
-    <ImageButton
-        android:id="@+id/botaolistagem"
-        android:layout_width="0dp"
+    <androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+        android:id="@+id/cardBotoesDohistorico"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        app:srcCompat="@drawable/rolagem"
+        android:layout_marginTop="12dp"
+        app:cardCornerRadius="8dp"
+        app:cardElevation="10dp"
         app:layout_constraintTop_toBottomOf="@id/recyclerViewHistorico"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toStartOf="@+id/botaoHiastorico"
-        android:layout_marginBottom="20dp"
-        />
+        app:layout_constraintBottom_toBottomOf="parent">
 
-    <ImageButton
-        android:id="@+id/botaoHiastorico"
-        android:background="@color/design_default_color_on_primary"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        app:srcCompat="@drawable/historia"
-        app:layout_constraintTop_toBottomOf="@id/recyclerViewHistorico"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintStart_toEndOf="@+id/botaolistagem"
-        app:layout_constraintEnd_toEndOf="parent"
-        android:layout_marginBottom="20dp"
-        />
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:paddingBottom="10dp"
+            android:paddingTop="10dp">
+
+
+            <ImageButton
+                android:id="@+id/botaolistagem"
+                android:layout_width="0dp"
+                android:layout_height="0dp"
+
+                android:background="@color/design_default_color_on_primary"
+                app:srcCompat="@drawable/baseline_home_24_cinza"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toStartOf="@+id/botaoHiastorico"
+
+                />
+
+            <ImageButton
+                android:id="@+id/botaoHiastorico"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:padding="5dp"
+                app:srcCompat="@drawable/baseline_history_24"
+                android:background="@color/design_default_color_on_primary"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintStart_toEndOf="@+id/botaolistagem"
+                app:layout_constraintEnd_toEndOf="parent"
+
+                />
+        </androidx.constraintlayout.widget.ConstraintLayout>
+    </androidx.cardview.widget.CardView>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

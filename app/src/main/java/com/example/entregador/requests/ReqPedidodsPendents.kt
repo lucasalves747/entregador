@@ -1,6 +1,7 @@
 package com.example.entregador.requests
 
 import android.os.AsyncTask
+import com.example.entregador.urls.Url
 import okhttp3.*
 import java.io.IOException
 
@@ -10,7 +11,7 @@ class ReqPedidodsPendents(val authToken:String?) : AsyncTask<Void, Void, String>
 
         // Crie uma solicitação GET com a URL
         val request = Request.Builder()
-            .url("https://mgdexpressapi-production.up.railway.app/pedidos/pendente")
+            .url("${Url().urlRoot}/pedidos/pendente")
             .get()
             .addHeader("Authorization", "Bearer ${authToken}")
             .addHeader("Content-Type", "application/json")

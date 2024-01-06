@@ -10,6 +10,7 @@ import android.widget.Toast
 import androidx.core.content.ContextCompat
 import com.example.entregador.model.LoginDados
 import com.example.entregador.requests.Login
+import com.example.entregador.urls.Url
 
 
 class Login : AppCompatActivity() {
@@ -24,6 +25,11 @@ class Login : AppCompatActivity() {
         val botao = findViewById<Button>(R.id.buttonLogin)
         val cadastrar = findViewById<TextView>(R.id.textViewSignUp)
 
+
+        cadastrar.setOnClickListener{
+            val segundaTela = Intent(this, CriarUsuario::class.java)
+            ContextCompat.startActivity(this, segundaTela, null)
+        }
 
         botao.setOnClickListener {
             val res =

@@ -4,23 +4,50 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".DetalhesEntrega">
-
+    >
 
     <androidx.appcompat.widget.Toolbar
         android:id="@+id/toolbar2"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="?attr/colorPrimary"
-        app:titleTextColor="@color/white"
+
+        app:titleTextColor="@color/black"
         app:title="Loca Da Entrega"
         android:minHeight="?attr/actionBarSize"
         android:theme="?attr/actionBarTheme"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintBottom_toTopOf="@+id/nomeLocal_origem"
         app:layout_constraintStart_toStartOf="parent"
 
         />
+
+    <ScrollView
+        android:id="@+id/scrollDetalhesPedido"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        app:layout_constraintTop_toBottomOf="@+id/toolbar2"
+        app:layout_constraintBottom_toTopOf="@+id/aceitar_entregue"
+        android:layout_marginBottom="10dp"
+        >
+<androidx.constraintlayout.widget.ConstraintLayout
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:paddingBottom="50dp"
+    tools:context=".DetalhesEntrega">
+
+    <androidx.cardview.widget.CardView
+        android:id="@+id/cardDestino"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="12dp"
+        app:cardCornerRadius="8dp"
+        app:cardElevation="6dp"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:padding="10dp"
+            tools:context=".DetalhesEntrega">
 
     <TextView
         android:id="@+id/nomeLocal_origem"
@@ -32,7 +59,8 @@
         android:textSize="16sp"
         android:textStyle="bold"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/toolbar2" />
+        app:layout_constraintTop_toTopOf="parent"
+        android:fontFamily="sans-serif-light"/>
 
     <TextView
         android:id="@+id/Local_Origem"
@@ -43,7 +71,8 @@
 
         android:text="Cliente:"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/nomeLocal_origem" />
+        app:layout_constraintTop_toBottomOf="@+id/nomeLocal_origem"
+        android:fontFamily="sans-serif-light"/>
 
     <TextView
         android:id="@+id/nomeLocal_destino"
@@ -55,7 +84,8 @@
         android:textSize="16sp"
         android:textStyle="bold"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/Local_Origem" />
+        app:layout_constraintTop_toBottomOf="@+id/Local_Origem"
+        android:fontFamily="sans-serif-light"/>
 
     <TextView
         android:id="@+id/Local_destino"
@@ -66,7 +96,8 @@
 
         android:text="Cliente:"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/nomeLocal_destino" />
+        app:layout_constraintTop_toBottomOf="@+id/nomeLocal_destino"
+        android:fontFamily="sans-serif-light"/>
 
     <View
         android:id="@+id/linharRota"
@@ -98,31 +129,73 @@
         app:layout_constraintBottom_toBottomOf="@+id/nomeLocal_destino"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="@+id/nomeLocal_destino" />
-    <Button
+
+
+
+
+            <Button
         android:id="@+id/rota"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:backgroundTint="@color/black"
         android:text="ver rota no mapa"
         android:layout_marginTop="30dp"
 
         android:layout_marginLeft="20dp"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/Local_destino" />
+        app:layout_constraintTop_toBottomOf="@+id/Local_destino"
+        android:fontFamily="sans-serif-light"/>
 
+            <com.google.android.gms.maps.MapView
+                android:id="@+id/mapView"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                tools:layout_editor_absoluteX="104dp"
+                tools:layout_editor_absoluteY="163dp" />
+        </androidx.constraintlayout.widget.ConstraintLayout>
 
-    <View
-        android:id="@+id/linha"
+    </androidx.cardview.widget.CardView>
+
+    <androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+        android:id="@+id/cardvalorObs"
         android:layout_width="match_parent"
-        android:layout_height="1dp"
-        android:background="#80000000"
-        tools:layout_editor_absoluteX="13dp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintBottom_toTopOf="@+id/observacao"
-        app:layout_constraintTop_toBottomOf="@+id/rota"
+        android:layout_height="wrap_content"
+        android:layout_margin="12dp"
+        app:cardCornerRadius="8dp"
+        app:cardElevation="6dp"
+        app:layout_constraintTop_toBottomOf="@id/cardDestino">
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:padding="10dp"
+            android:layout_height="match_parent"
+
+            tools:context=".DetalhesEntrega">
+
+    <TextView
+        android:id="@+id/valor"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="20dp"
         android:layout_marginTop="20dp"
-        android:layout_marginBottom="20dp"
-        />
+        android:text="valor:"
+        android:textSize="16sp"
+        android:textStyle="bold"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        android:fontFamily="sans-serif-light"/>
+
+    <TextView
+        android:id="@+id/valorText"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="20dp"
+        android:layout_marginTop="20dp"
+        android:text="Não ha observaçao no pedido"
+        app:layout_constraintStart_toEndOf="@+id/valor"
+        app:layout_constraintTop_toTopOf="parent"
+        android:layout_marginBottom="10dp"
+        android:fontFamily="sans-serif-light"/>
 
 
     <TextView
@@ -135,7 +208,8 @@
         android:textSize="16sp"
         android:textStyle="bold"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/linha" />
+        app:layout_constraintTop_toBottomOf="@+id/valorText"
+        android:fontFamily="sans-serif-light"/>
 
     <TextView
         android:id="@+id/observacaoText"
@@ -146,54 +220,71 @@
         android:text="Não ha observaçao no pedido"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/observacao"
-        android:layout_marginBottom="10dp"/>
-    <View
-        android:id="@+id/linha2"
-        android:layout_width="match_parent"
-        android:layout_height="1dp"
-        android:background="#80000000"
-        tools:layout_editor_absoluteX="13dp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintBottom_toTopOf="@+id/itensPedido"
-        app:layout_constraintTop_toBottomOf="@+id/observacaoText"
-        android:layout_marginTop="20dp"
-        android:layout_marginBottom="20dp"
-        />
+        android:layout_marginBottom="10dp"
+        android:fontFamily="sans-serif-light"/>
+        </androidx.constraintlayout.widget.ConstraintLayout>
+    </androidx.cardview.widget.CardView>
 
-    <TextView
-        android:id="@+id/itensPedido"
+    <androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+        android:id="@+id/cardItensPedido"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginLeft="20dp"
-        android:layout_marginTop="20dp"
-        android:text="Itens do pedido"
-        android:textSize="16sp"
-        android:textStyle="bold"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/linha2" />
+        android:layout_margin="12dp"
+        android:layout_marginBottom="16dp"
+        app:cardCornerRadius="8dp"
+        app:cardElevation="12dp"
 
-    <TextView
-        android:id="@+id/itensPedidoText"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginLeft="20dp"
-        android:layout_marginTop="5dp"
 
-        android:text="maça \npizzat\ntes"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/itensPedido" />
+        app:layout_constraintTop_toBottomOf="@id/cardvalorObs">
 
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:padding="10dp"
+            tools:context=".DetalhesEntrega">
+
+
+            <TextView
+                android:id="@+id/itensPedido"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="20dp"
+                android:layout_marginTop="20dp"
+                android:fontFamily="sans-serif-light"
+                android:text="Itens do pedido"
+                android:textSize="16sp"
+                android:textStyle="bold"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <TextView
+                android:id="@+id/itensPedidoText"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="20dp"
+                android:layout_marginTop="5dp"
+                android:fontFamily="sans-serif-light"
+                android:text="maça \npizzat\ntes"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/itensPedido" />
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+</androidx.cardview.widget.CardView>
+
+
+</androidx.constraintlayout.widget.ConstraintLayout></ScrollView>
     <Button
-        android:id="@+id/entregue"
+        android:id="@+id/aceitar_entregue"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="ENTREGUE"
+        android:text="carregando..."
+        android:layout_marginLeft="10dp"
+        android:layout_marginRight="10dp"
         android:layout_marginBottom="30dp"
+        android:backgroundTint="@color/black"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintBottom_toBottomOf="parent" />
-
-
+        app:layout_constraintBottom_toBottomOf="parent"
+        android:fontFamily="sans-serif-light"/>
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>

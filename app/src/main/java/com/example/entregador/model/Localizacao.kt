@@ -1,4 +1,4 @@
 package com.example.entregador.model
 
-class Localizacao(latitude: Double, Longetude: Double) {
+class Localizacao(var latitude: Double, var longitude: Double) {
 }

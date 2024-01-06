@@ -5,6 +5,7 @@ import android.os.AsyncTask
 import android.widget.Toast
 import com.example.entregador.model.LoginDados
 import com.example.entregador.model.Motoboy
+import com.example.entregador.urls.Url
 import com.google.gson.Gson
 import okhttp3.MediaType.Companion.toMediaType
 import okhttp3.OkHttpClient
@@ -25,7 +26,7 @@ class Login(val log: LoginDados) : AsyncTask<Void, Void, String>(){
         val client = OkHttpClient()
 
         // Especifique a URL do servidor
-        val url = "https://mgdexpressapi-production.up.railway.app/login"
+        val url = "${Url().urlRoot}/login"
 
         // Crie um corpo de solicitação com o JSON
         val requestBody = RequestBody.create("application/json; charset=utf-8".toMediaType(), jsonData)

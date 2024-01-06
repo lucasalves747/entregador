@@ -1,0 +1,234 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:orientation="vertical"
+    >
+
+    <androidx.appcompat.widget.Toolbar
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+
+        app:title="Historico"
+        app:titleTextColor="@color/black"
+        />
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical" >
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Pedido"
+        android:textStyle="bold"
+        android:layout_marginLeft="10dp"
+        android:layout_marginTop="10dp"
+        android:layout_marginBottom="3dp"/>
+
+
+
+    <androidx.cardview.widget.CardView
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="5dp"
+        android:layout_margin="8dp"
+        app:cardCornerRadius="4dp"
+        app:cardElevation="4dp">
+
+        <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            xmlns:app="http://schemas.android.com/apk/res-auto"
+            android:orientation="vertical"
+            android:padding="16dp"
+            >
+
+
+    <!-- Nome do Estabelecimento -->
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Nome do Estabelecimento"
+        android:textStyle="bold"/>
+
+    <TextView
+        android:id="@+id/nomeEstabelecimento"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="string"/>
+
+    <!-- Local de Origem -->
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Local de Origem"
+        android:textStyle="bold"/>
+
+    <TextView
+        android:id="@+id/localOrigem"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="string"/>
+
+    <!-- Valor -->
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Valor"
+        android:textStyle="bold"/>
+
+    <TextView
+        android:id="@+id/valor"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="0"/>
+
+    <!-- Observação -->
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Observação"
+        android:textStyle="bold"/>
+
+    <TextView
+        android:id="@+id/observacao"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="string"/>
+
+    <!-- Itens do Pedido -->
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Itens do Pedido"
+        android:textStyle="bold"/>
+
+    <TextView
+        android:id="@+id/itensDoPedido"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="string"/>
+
+    <!-- Local de Destino -->
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Local de Destino"
+        android:textStyle="bold"/>
+
+    <TextView
+        android:id="@+id/localDestino"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="string"/>
+
+    <!-- Data de Criação -->
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Data de Criação"
+        android:textStyle="bold"/>
+
+    <TextView
+        android:id="@+id/dataCriacao"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="2023-12-26"/>
+
+    <!-- Data de Entrega -->
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Data de Entrega"
+        android:textStyle="bold"/>
+
+    <TextView
+        android:id="@+id/dataEntrega"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="2023-12-26"/>
+        </LinearLayout>
+    </androidx.cardview.widget.CardView>
+
+
+
+    <!-- Gerente -->
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Gerente"
+        android:textStyle="bold"
+        android:layout_marginLeft="10dp"
+        android:layout_marginTop="10dp"
+        android:layout_marginBottom="3dp"/>
+
+    <androidx.cardview.widget.CardView
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="5dp"
+        android:layout_marginLeft="8dp"
+        android:layout_marginRight="8dp"
+        app:cardCornerRadius="4dp"
+        app:cardElevation="4dp">
+
+        <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            xmlns:app="http://schemas.android.com/apk/res-auto"
+            android:orientation="vertical"
+            android:padding="16dp"
+            >
+
+    <!-- Nome do Gerente -->
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Nome do Gerente"
+        android:textStyle="bold"/>
+
+    <TextView
+        android:id="@+id/nomeGerente"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="string"/>
+
+    <!-- Telefone do Gerente -->
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Telefone do Gerente"
+        android:textStyle="bold"/>
+
+    <TextView
+        android:id="@+id/telefoneGerente"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="string"/>
+
+    <!-- Email do Gerente -->
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Email do Gerente"
+        android:textStyle="bold"/>
+
+    <TextView
+        android:id="@+id/emailGerente"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="string"/>
+        </LinearLayout>
+    </androidx.cardview.widget.CardView>
+
+        </LinearLayout>
+    </ScrollView>
+</LinearLayout>

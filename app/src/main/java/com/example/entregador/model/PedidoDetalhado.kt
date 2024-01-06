@@ -3,12 +3,14 @@ package com.example.entregador.model
 import java.math.BigDecimal
 
 class PedidoDetalhado (
-    val nomeOrigem: String,
-    val LocalOrigen:String,
-    val nomeDestino:String,
-    val LocalDestino:String,
-    val valor : BigDecimal,
-    val observacoes: String,
-    val itensPedido:String
 
-)
+
+    val nomeEstabelecimento: String,
+    val localOrigem:String,
+    val localDestino:String,
+    val valor : BigDecimal,
+    val observacao: String,
+    val itensDoPedido:String,
+    var status:String,
+
+    )

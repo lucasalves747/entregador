@@ -8,7 +8,7 @@ class Motoboy(
     val cpf:String,
     val nomeParente:String,
     val telefoneEmergencia:String,
-    val chavePix:String) {
+    val chavepix:String) {
 
 
 }

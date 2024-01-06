@@ -1,9 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <color name="black">#FF000000</color>
-    <color name="green">#03A9F4</color>
-    <color name="ciano">#03A9F4</color>
-    <color name="white">#FFFFFFFF</color>
-    <color name="cinza">#888888</color>
+    <color name="black">#0D0D0D</color>
+    <color name="cinzaMedio">#737373</color>
+    <color name="cinzaEscuro">#262626</color>
+    <color name="white">#D9D9D9</color>
+    <color name="cinza_claro">#A6A6A6</color>
+    <color name="verdeBotao">#038C7F</color>
+    <color name="vermelho">#E80404</color>
+    <color name="cinza_claroBackGrund">#F6F6F6</color>
+
 
 </resources>

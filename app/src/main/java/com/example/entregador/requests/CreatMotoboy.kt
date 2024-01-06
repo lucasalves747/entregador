@@ -2,6 +2,7 @@ package com.example.entregador.requests
 
 import android.os.AsyncTask
 import com.example.entregador.model.Motoboy
+import com.example.entregador.urls.Url
 import com.google.gson.Gson
 import okhttp3.MediaType.Companion.toMediaType
 import okhttp3.OkHttpClient
@@ -15,7 +16,7 @@ class CreatMotoboy (var m: Motoboy): AsyncTask<Void, Void, String>()  {
 
     override fun doInBackground(vararg p0: Void?): String {
         // Crie uma instância da sua classe para representar os dados que você deseja enviar
-        val dataToSend = Motoboy(m.nome,m.telefone,m.email,m.senha,m.cpf,m.nomeParente,m.telefoneEmergencia,m.chavePix)
+        val dataToSend = Motoboy(m.nome,m.telefone,m.email,m.senha,m.cpf,m.nomeParente,m.telefoneEmergencia,m.chavepix)
 
         // Use a biblioteca Gson para converter a classe em JSON
         val gson = Gson()
@@ -25,7 +26,7 @@ class CreatMotoboy (var m: Motoboy): AsyncTask<Void, Void, String>()  {
         val client = OkHttpClient()
 
         // Especifique a URL do servidor
-        val url = "https://mgdexpressapi-production.up.railway.app/crear/motoboy"
+        val url = "${Url().urlRoot}/crear/motoboy"
 
         // Crie um corpo de solicitação com o JSON
         val requestBody = RequestBody.create("application/json; charset=utf-8".toMediaType(), jsonData)
@@ -44,7 +45,7 @@ class CreatMotoboy (var m: Motoboy): AsyncTask<Void, Void, String>()  {
             // Verifique se a solicitação foi bem-sucedida (código de resposta 200)
             if (response.isSuccessful) {
                 // Obtenha a resposta como string
-                return response.body?.string() ?: "Resposta vazia"
+                return "${response.code}"
             } else {
                 // Se a solicitação não for bem-sucedida, retorne uma mensagem de erro
                 return "Erro: ${response.code}"

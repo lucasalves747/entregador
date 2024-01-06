@@ -5,7 +5,9 @@ import java.math.BigDecimal
 class Pedido (
     val id: Long,
     val valor : BigDecimal,
-    val local: String,
-    val Estabelecimento: String
+    val localDestino: String,
+    val nomeEstabelecimento: String,
+    val status : String
+
 
 )

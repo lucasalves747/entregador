@@ -1,16 +1,15 @@
-package com.example.entregador
-
-import android.content.Context
+package  com.example.entregador
+import android.Manifest
 import android.content.Intent
 import android.content.pm.PackageManager
-import androidx.appcompat.app.AppCompatActivity
+import android.net.Uri
 import android.os.Bundle
 import android.os.Handler
 import android.provider.Settings
-import android.view.LayoutInflater
 import android.widget.ImageButton
 import android.widget.Toast
 import androidx.appcompat.app.AlertDialog
+import androidx.appcompat.app.AppCompatActivity
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.FragmentActivity
@@ -19,110 +18,156 @@ import androidx.recyclerview.widget.RecyclerView
 import com.example.entregador.historico.Historico
 import com.example.entregador.model.Pedido
 import com.example.entregador.recyclerView.ListapedidosAdapter
+import com.example.entregador.requests.PushLocalizacao
 import com.example.entregador.requests.ReqPedidodsPendents
-import com.google.android.gms.location.FusedLocationProviderClient
-import com.google.android.gms.location.LocationServices
+import com.google.android.gms.location.*
 import com.google.gson.Gson
 import com.google.gson.reflect.TypeToken
-import java.math.BigDecimal
-
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.GlobalScope
+import kotlinx.coroutines.launch
 
 @Suppress("DEPRECATION")
-class MainActivity : AppCompatActivity(), Runnable {
+class MainActivity() : AppCompatActivity(), Runnable {
 
-    lateinit var recyclerView: RecyclerView
-    var handler = Handler()
-    lateinit var pedidos: List<Pedido>
-    var executaAtualizacaoDelocalizacaoEpedidos = true
-    lateinit var fusedLocationProviderClient: FusedLocationProviderClient
-    var token:String? = null
-
+    private lateinit var recyclerView: RecyclerView
+    private val handler = Handler()
+    private lateinit var pedidos: List<Pedido>
+    private var executaAtualizacaoDelocalizacaoEpedidos = true
+    private var atualizarpedido = true
+    private lateinit var fusedLocationProviderClient: FusedLocationProviderClient
+    private lateinit var locationRequest: LocationRequest
+    private var token: String? = null
+    private var permissao:String? = null
+    private var ultimaLatitude: Double = 0.0
+    private var ultimaLongitude: Double = 0.0
+    private var aceitouLocalizacao = false
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         token = buscarTokenUsuario()
         if (token.equals(null)) {
-            val segundaTela = Intent(this, Login::class.java)
+            val segundaTela = Intent(this,Login::class.java)
             ContextCompat.startActivity(this, segundaTela, null)
         }
+
+        permissao  = buscarPermissao()
+
 
         setContentView(R.layout.activity_main)
 
         val botaoHistorico = findViewById<ImageButton>(R.id.botaoHiastorico)
         botaoHistorico.setOnClickListener {
             val segundaTela = Intent(this, Historico::class.java)
+            segundaTela.putExtra("token", token)
             ContextCompat.startActivity(this, segundaTela, null)
         }
 
         fusedLocationProviderClient = LocationServices.getFusedLocationProviderClient(this)
+        locationRequest = LocationRequest.create().apply {
+            interval = 2000 // Intervalo de atualização em milissegundos
+            fastestInterval = 1000 // Intervalo mais rápido em milissegundos
+            priority = LocationRequest.PRIORITY_HIGH_ACCURACY
+        }
 
-        recyclerView = findViewById<RecyclerView>(R.id.recyclerView)
+        recyclerView = findViewById(R.id.recyclerView)
 
-        val requesPedidos: List<Pedido> =
-            pedidosFromJson(ReqPedidodsPendents(token).execute().get())
+        val requesPedidos: List<Pedido> = pedidosFromJson(ReqPedidodsPendents(token).execute().get())
+        pedidos = requesPedidos
+        creatRecycleview(requesPedidos, token)
 
-        creatRecycleview(listOf(Pedido(1, BigDecimal("40"),"lucas","ola")))
+        Toast.makeText(this, "${permissao}", Toast.LENGTH_SHORT).show()
+        if(permissao.equals(null)){
+            exibirSettingDelocalizacao(this)
+
+            if(aceitouLocalizacao) {
+                val sharedPreferences =
+                    this.getSharedPreferences("permissao", MODE_PRIVATE)
+                val editor = sharedPreferences.edit()
+                editor.putString("permissao", "ja pediu")
+                editor.apply()
+            }
+
+        }
 
         run()
     }
 
-
-    fun creatRecycleview(pedidos: List<Pedido>) {
+    private fun creatRecycleview(pedidos: List<Pedido>, token: String?) {
         recyclerView.clearAnimation()
         recyclerView.adapter = ListapedidosAdapter(
-            context = this, pedidos
+            context = this, pedidos, token
         )
         recyclerView.layoutManager = LinearLayoutManager(this)
-
     }
 
-    fun enviaLocalizacao() {
-        val task = fusedLocationProviderClient.lastLocation
+    private fun enviaLocalizacao() {
         if (ActivityCompat.checkSelfPermission(
                 this,
-                android.Manifest.permission.ACCESS_FINE_LOCATION
-            )
-            != PackageManager.PERMISSION_GRANTED
+                Manifest.permission.ACCESS_FINE_LOCATION
+            ) != PackageManager.PERMISSION_GRANTED
             && ActivityCompat.checkSelfPermission(
                 this,
-                android.Manifest.permission.ACCESS_COARSE_LOCATION
-            )
-            != PackageManager.PERMISSION_GRANTED
+                Manifest.permission.ACCESS_COARSE_LOCATION
+            ) != PackageManager.PERMISSION_GRANTED
         ) {
-
             ActivityCompat.requestPermissions(
                 this,
-                arrayOf(android.Manifest.permission.ACCESS_FINE_LOCATION),
+                arrayOf(Manifest.permission.ACCESS_FINE_LOCATION),
                 101
             )
-
             return
         }
-        task.addOnSuccessListener {
 
-            if (it != null) {
-                //Requests().pushLocalizacao(Localizacao(it.latitude,it.longitude))
-                Toast.makeText(this, "${it.longitude} ${it.latitude}", Toast.LENGTH_LONG).show()
-            } else {
-                exibirDialogAtivarLocalizacao(this)
-            }
-
-        }
+        fusedLocationProviderClient.requestLocationUpdates(
+            locationRequest,
+            object : LocationCallback() {
+                override fun onLocationResult(locationResult: LocationResult) {
+                    val location = locationResult.lastLocation
+                    if (location != null) {
+                        if (location.latitude != ultimaLatitude && location.longitude != ultimaLongitude) {
+                            GlobalScope.launch(Dispatchers.IO) {
+                                try {
+                                    PushLocalizacao(location.latitude, location.longitude, token).execute()
+                                } catch (e: Exception) {
+                                    e.printStackTrace()
+                                    // Trate exceções, se necessário
+                                }
+                            }
+                            ultimaLatitude = location.latitude
+                            ultimaLongitude = location.longitude
+                        }
+                    } else {
+                        exibirDialogAtivarLocalizacao(this@MainActivity)
+                    }
+                }
+            },
+            null
+        )
     }
+
     var i = 0
     override fun run() {
-        val requesPedidos: List<Pedido> =
-            pedidosFromJson(ReqPedidodsPendents(token).execute().get())
+        if (atualizarpedido && i >= 10) {
+            val requesPedidos: List<Pedido> = pedidosFromJson(ReqPedidodsPendents(token).execute().get())
 
-        if (i == 5) {
-            ListapedidosAdapter(this, listOf(Pedido(1, BigDecimal("3"),"yasmin","casa"))).atualizarLista()
+            if(requesPedidos.size != pedidos.size) {
+                Toast.makeText(this,"Desenhando",Toast.LENGTH_SHORT).show()
+                creatRecycleview(requesPedidos, token)
+                pedidos = requesPedidos
+            }else{
+                Toast.makeText(this,"ferente",Toast.LENGTH_SHORT).show()
 
+            }
         }
-        i++
 
         enviaLocalizacao()
         if (executaAtualizacaoDelocalizacaoEpedidos) {
-            handler.postDelayed(this, 5000)
+            handler.postDelayed(this, 3000)
+        }
+        i++
+        if(i == 11){
+            i=0
         }
     }
 
@@ -130,7 +175,6 @@ class MainActivity : AppCompatActivity(), Runnable {
         val gson = Gson()
         val listaTipo = object : TypeToken<List<Pedido>>() {}.type
         return gson.fromJson(json, listaTipo)
-
     }
 
     fun setFalseExecutaAtualizacaoDelocalizacaoEpedidos() {
@@ -143,10 +187,24 @@ class MainActivity : AppCompatActivity(), Runnable {
         super.onDestroy()
     }
 
-    fun buscarTokenUsuario(): String? {
-        val sharedPreferences =
-            this.getSharedPreferences("chave-token", MODE_PRIVATE)
+    override fun onResume() {
+        atualizarpedido = true
+        super.onResume()
+    }
+
+    override fun onPause() {
+        atualizarpedido = false
+        super.onPause()
+    }
+
+    private fun buscarTokenUsuario(): String? {
+        val sharedPreferences = this.getSharedPreferences("chave-token", MODE_PRIVATE)
         return sharedPreferences.getString("token", null)
+    }
+
+    private fun buscarPermissao():String?{
+        val sharedPreferences = this.getSharedPreferences("permissao", MODE_PRIVATE)
+        return sharedPreferences.getString("permissao", null)
     }
 
     private fun exibirDialogAtivarLocalizacao(activity: FragmentActivity) {
@@ -163,4 +221,31 @@ class MainActivity : AppCompatActivity(), Runnable {
             .show()
     }
 
+    public fun exibirSettingDelocalizacao(activity: FragmentActivity){
+        val builder = AlertDialog.Builder(activity)
+        builder.setTitle("Permissão de Localização")
+            .setMessage("Para fornecer a melhor experiência, precisamos acessar sua localização o tempo todo. Por favor, conceda a permissão de localização nas configurações do aplicativo.")
+            .setPositiveButton("Permitir Localização") { _, _ ->
+                aceitouLocalizacao = true
+                // Abra diretamente as configurações de permissão de localização
+                val intent = Intent(Settings.ACTION_APPLICATION_DETAILS_SETTINGS)
+                val uri = Uri.fromParts("package", activity.packageName, null)
+                intent.data = uri
+                activity.startActivity(intent)
+
+            }
+            .setNegativeButton("Cancelar") { _, _ ->
+                // Lidar com o cancelamento
+
+                val builder = AlertDialog.Builder(activity)
+                builder.setTitle("Permissão de Localização")
+                    .setMessage("Infelizmente não sera possivel usar o app")
+                    .setPositiveButton("ok") { _, _ ->
+                        finishAffinity()
+                    }
+                    .show()
+            }
+            .show()
+
+    }
 }
